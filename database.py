@@ -70,6 +70,15 @@ async def get_all_fasta_data() -> list[FastaData]:
             return fasta_data
 
 
+async def get_fasta_data_by_seq(seq: str) -> FastaData:
+    async with async_session() as session:
+        async with session.begin():
+            query = select(FastaData).filter(FastaData.seq == seq)
+            result = await session.execute(query)
+            fasta_data = result.scalars().first()
+            return fasta_data
+
+
 async def init_db():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
