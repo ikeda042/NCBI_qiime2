@@ -10,8 +10,3 @@ conda config --env --set subdir osx-64
 ```bash
 conda activate qiime2-amplicon-2024.5    
 ```
-
-
-```bash
-conda install --file requirements.txt -c conda-forge
-```
