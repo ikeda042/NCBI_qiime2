@@ -1,0 +1,11 @@
+# License
+
+This repository includes data obtained from the National Center for Biotechnology Information (NCBI).
+
+## NCBI Data License
+
+The data provided here are sourced from NCBI and are subject to their terms of use. For more information, please visit [NCBI's data usage policies](https://www.ncbi.nlm.nih.gov/home/about/policies/).
+
+## Repository License
+
+Except where otherwise noted, this repository and its contents are licensed under the MIT License.
