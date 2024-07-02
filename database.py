@@ -43,7 +43,7 @@ def FASTA_loader(fasta_file: str) -> list[tuple[str, str]]:
     return sequences
 
 
-async def get_fasta_data(tag: str):
+async def get_fasta_data(tag: str) -> FastaData:
     async with async_session() as session:
         async with session.begin():
             query = select(FastaData).filter(FastaData.tag == tag)
@@ -52,12 +52,21 @@ async def get_fasta_data(tag: str):
             return fasta_data
 
 
-async def add_fasta_data(tag: str, seq: str):
+async def add_fasta_data(tag: str, seq: str) -> FastaData:
     async with async_session() as session:
         async with session.begin():
             fasta_data = FastaData(tag=tag, seq=seq)
             session.add(fasta_data)
             await session.commit()
+            return fasta_data
+
+
+async def get_all_fasta_data() -> list[FastaData]:
+    async with async_session() as session:
+        async with session.begin():
+            query = select(FastaData)
+            result = await session.execute(query)
+            fasta_data = result.scalars().all()
             return fasta_data
 
 
