@@ -8,3 +8,7 @@ conda config --env --set subdir osx-64
 ```
 
 
+```bash
+conda activate qiime2-2023.2
+```
+
