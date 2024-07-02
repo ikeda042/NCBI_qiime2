@@ -8,6 +8,6 @@ conda config --env --set subdir osx-64
 
 
 ```bash
-conda activate qiime2-2024.5
+conda activate qiime2-amplicon-2024.5    
 ```
 
