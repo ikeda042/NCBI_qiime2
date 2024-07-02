@@ -34,4 +34,14 @@ async def load_qza(file_path: str) -> list[Sequence]:
 
 if __name__ == "__main__":
     # sequences = asyncio.run(load_qza("rep-seqs.qza"))
-    seq = [i.seq for i in asyncio.run(get_all_fasta_data())]
+    ncbi_fasta_data = [i for i in asyncio.run(get_all_fasta_data())]
+
+    for i in ncbi_fasta_data:
+        tag: str = i.tag
+        bacterium: str = (
+            " ".join(tag.split(" ")[1:3])
+            if "." not in tag.split(" ")[1]
+            else tag.split(" ")[1]
+        )
+        id = tag.split(" ")[0]
+        print(f"{id} {bacterium}")
