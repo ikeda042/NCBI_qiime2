@@ -1,7 +1,4 @@
-from fastapi import FastAPI, File, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
 from models import Sequence
-import uvicorn
 import aiofiles
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
@@ -9,19 +6,6 @@ import qiime2
 import pandas as pd
 from qiime2 import Artifact
 
-app = FastAPI(
-    docs_url="/api/docs", redoc_url="/api/redoc", openapi_url="/api/openapi.json"
-)
-
-origins = ["*"]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 executor = ThreadPoolExecutor()
 
@@ -47,25 +31,5 @@ async def load_qza(file_path: str) -> list[Sequence]:
     return [Sequence(id=i, sequence=ret[i]) for i in ret]
 
 
-@app.get("/")
-async def read_root():
-    return {"status": "running"}
-
-
-@app.post("/qza/")
-async def get_qza(file: UploadFile = File(...)) -> list[Sequence]:
-    async with aiofiles.tempfile.NamedTemporaryFile(
-        delete=False, suffix=".qza"
-    ) as tmp_file:
-        contents = await file.read()
-        await tmp_file.write(contents)
-        tmp_file_path = tmp_file.name
-
-    result = await load_qza(tmp_file_path)
-
-    await aiofiles.os.remove(tmp_file_path)
-    return result
-
-
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    asyncio.run(load_qza("temp.qza"))
