@@ -33,9 +33,7 @@ async def get_qza(file: UploadFile = File(...)) -> list[Sequence]:
         contents = await file.read()
         await tmp_file.write(contents)
         tmp_file_path = tmp_file.name
-    result = await load_qza(tmp_file_path)
-    await aiofiles.os.remove(tmp_file_path)
-    return result
+    return await load_qza(tmp_file_path)
 
 
 if __name__ == "__main__":
