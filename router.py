@@ -21,6 +21,11 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+async def read_root():
+    return {"status": "running"}
+
+
 @app.post("/qza/")
 async def get_qza(file: UploadFile = File(...)) -> list[Sequence]:
     with tempfile.NamedTemporaryFile(delete=False, suffix=".qza") as tmp_file:

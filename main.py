@@ -19,7 +19,7 @@ async def load_qza(file_path: str) -> list[Sequence]:
     return [Sequence(id=i, sequence=ret[i]) for i in ret]
 
 
-if __name__ == "__main__":
-    loop: asyncio.AbstractEventLoop = asyncio.get_event_loop()
-    res: list[Sequence] = loop.run_until_complete(load_qza("rep-seqs.qza"))
-    print(res)
+# if __name__ == "__main__":
+#     loop: asyncio.AbstractEventLoop = asyncio.get_event_loop()
+#     res: list[Sequence] = loop.run_until_complete(load_qza("rep-seqs.qza"))
+#     print(res)
