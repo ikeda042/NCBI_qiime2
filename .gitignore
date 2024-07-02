@@ -1,1 +1,6 @@
-venv/
+*
+!.gitignore
+!main.py
+!README.md
+!rep-seqs.qza
+!requirements.txt
