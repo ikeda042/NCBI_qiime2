@@ -1,8 +1,9 @@
 # NCBI_qiime2
 
 ```bash
-conda create --name venv  python=3.8
-conda activate venv
+curl -sL https://data.qiime2.org/distro/core/qiime2-2023.2-py38-osx-conda.yml -o qiime2-2023.2-py38-osx-conda.yml
 ```
 
-add channels for qiime2 
+```bash
+conda env create -n qiime2-2023.2 --file qiime2-2023.2-py38-osx-conda.yml
+```
