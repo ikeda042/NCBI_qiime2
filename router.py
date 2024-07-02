@@ -1,8 +1,10 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from models import Sequence
 from main import load_qza
 import uvicorn
+import os
+import tempfile
 
 app = FastAPI(
     docs_url="/api/docs", redoc_url="/api/redoc", openapi_url="/api/openapi.json"
@@ -19,9 +21,15 @@ app.add_middleware(
 )
 
 
-@app.get("/qza/{file_path}", response_model=list[Sequence])
-async def get_qza(file_path: str) -> list[Sequence]:
-    return await load_qza(file_path)
+@app.post("/qza/")
+async def get_qza(file: UploadFile = File(...)) -> list[Sequence]:
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".qza") as tmp_file:
+        contents = await file.read()
+        tmp_file.write(contents)
+        tmp_file_path = tmp_file.name
+    result = await load_qza(tmp_file_path)
+    os.unlink(tmp_file_path)
+    return result
 
 
 if __name__ == "__main__":
