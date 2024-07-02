@@ -2,6 +2,7 @@ import qiime2
 from qiime2 import Artifact
 import aiofiles
 import asyncio
+from pydantic import BaseModel
 
 aft = Artifact.load("rep-seqs.qza")
 
