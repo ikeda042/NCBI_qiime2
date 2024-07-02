@@ -5,6 +5,7 @@ from concurrent.futures import ThreadPoolExecutor
 import qiime2
 import pandas as pd
 from qiime2 import Artifact
+from database import load_fasta_to_sqlite, get_all_fasta_data
 
 
 executor = ThreadPoolExecutor()
@@ -32,4 +33,5 @@ async def load_qza(file_path: str) -> list[Sequence]:
 
 
 if __name__ == "__main__":
-    asyncio.run(load_qza("temp.qza"))
+    # sequences = asyncio.run(load_qza("rep-seqs.qza"))
+    seq = [i.seq for i in asyncio.run(get_all_fasta_data())]
