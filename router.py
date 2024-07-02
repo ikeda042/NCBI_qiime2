@@ -8,6 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 import qiime2
 import pandas as pd
 from qiime2 import Artifact
+from database import load_fasta_to_sqlite
 
 app = FastAPI(
     docs_url="/api/docs", redoc_url="/api/redoc", openapi_url="/api/openapi.json"
@@ -45,6 +46,12 @@ async def load_qza(file_path: str) -> list[Sequence]:
         await f.write(fasta_content)
 
     return [Sequence(id=i, sequence=ret[i]) for i in ret]
+
+
+@app.on_event("startup")
+async def startup_event():
+    # await load_fasta_to_sqlite("./NCBI_database.fasta")
+    pass
 
 
 @app.get("/")
